@@ -11,6 +11,8 @@ class Category(models.Model):
 	slug = models.SlugField(blank=True, unique=True)
 	
 	def save(self, *args, **kwargs):
+		if self.views < 0:
+			self.views = 0
 		self.slug = slugify(self.name)
 		super(Category, self).save(*args, **kwargs)
 	
@@ -27,6 +29,7 @@ class Page(models.Model):
 	url = models.CharField(max_length=200)
 	views = models.IntegerField(default=0)
 	
+
 	def __str__(self):
 		return self.title
 
